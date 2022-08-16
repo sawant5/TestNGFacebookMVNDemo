@@ -1,37 +1,34 @@
-# This is a basic workflow that is manually triggered
+# This is a basic workflow to help you get started with Actions
 
 name: CI 
 
-# Controls when the action will run. Workflow runs when manually triggered using the UI
-# or API.
+# Controls when the workflow will run
 on:
-    # Triggers the workflow on push or pull request events but only for the main branch
-  push: 
+  # Triggers the workflow on push or pull request events but only for the main branch
+  push:
     branches: [ main ]
   pull_request:
     branches: [ main ]
+
+  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
+
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
- build:
-  runs-on: window-latest
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
     # Steps represent a sequence of tasks that will be executed as part of the job
-  steps:
-   - uses: actions/checkout@v2
-    # Runs a single command using the runners s
-# Runs a single command using the runners shell
-   - name: Cache Maven packages
-     uses: actions/cache@v1
-     with:
-      path: ~/.m2
-      key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-      restore-keys: ${{ runner.os }}-m2
-     
-   - name: Run a one-line script
-     run: mvn clean install
-     continue-on-error: true
-     
-   - uses: actions/upload-artifact@v2
-     with:
-       name: TestReport
-       path: test-output/myReport.html
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+      - uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu' # See 'Supported distributions' for available options
+          java-version: '11'
+      - name: Step 1 :List ALL original files
+        run: ls -a
+      - name: Step 2 Github Build Maven Project
+        run: mvn clean verify -Dtestng.dtd.http=true
