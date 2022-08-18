@@ -40,6 +40,6 @@ jobs:
      
    - uses: actions/upload-artifact@v2
      with:
-      name: static-site 
-      path: .next/
+      name: my-artifact
+      path: path/to/artifact/world.html
       
