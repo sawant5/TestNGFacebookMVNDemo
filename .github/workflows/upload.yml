@@ -33,14 +33,16 @@ jobs:
       path: ~/.m2
       key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
       restore-keys: ${{ runner.os }}-m2
+   - name: Uplaod artifacts
+     uses: actions/upload-artifact@v2
+     with:
+      name: TestReport
+      path: test-output/myReport.html
      
    - name: Run a one-line script
      run: mvn clean install
      continue-on-error: true
      
-   - uses: actions/upload-artifact@v2
-     with:
-       name: TestReport
-       path: test-output/myReport.html
+
 
       
