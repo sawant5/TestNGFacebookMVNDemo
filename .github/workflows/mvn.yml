@@ -1,0 +1,38 @@
+# This is a basic workflow that is manually triggered
+
+name: Windows workflow
+
+# Controls when the action will run. Workflow runs when manually triggered using the UI
+# or API.
+on:
+  workflow_dispatch:
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+ build:
+  runs-on: window-latest
+    # Steps represent a sequence of tasks that will be executed as part of the job
+  steps:
+   - uses: actions/checkout@v2
+    # Runs a single command using the runners shell
+   - name: Run a one-line script
+     run: mvn clean install
+       mvn version >> mvn.txt
+     continue-on-error: true
+     
+   - uses: actions/upload-artifact@v2
+     with:
+       name: mvn.txt
+       path: mvn.txt
+     
+   - name: Run a one-line script
+     run: mvn clean install
+     continue-on-error: true
+     
+   - uses: actions/upload-artifact@v2
+     with:
+       name: TestReport
+       path: test-output/myReport.html
+
+     
+     
+   
