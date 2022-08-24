@@ -25,7 +25,7 @@ jobs:
        path: mvn.txt
      
    - name: Run a one-line script
-     run: mvn clean install
+     run: mvn clean install >> test-output/myReport.html
      continue-on-error: true
      
    - uses: actions/upload-artifact@v2
